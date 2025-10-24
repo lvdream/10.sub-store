@@ -32,8 +32,8 @@ dns:
         - https://dns.pub/dns-query
         - https://dns.flymc.cc/dns-query
     fake-ip-range: 198.18.0.1/16
-    fake-ip-filter: ['domain-set:domestic_cn','domain-set:private','domain-set:fakeip-filter','domain-set:trackerslist']
-    nameserver-policy: {'rule-set:reject_domainset,reject_non_ip': [rcode://success]}
+    fake-ip-filter: ['rule-set:fakeip-filter,trackerslist,private,cn']
+    nameserver-policy: {'rule-set:reject_non_ip,reject_domainset,reject_non_ip_drop,reject_non_ip_no_drop': [rcode://success]}
 
 ### 域名嗅探
 sniffer:
@@ -106,6 +106,8 @@ proxy-groups:
   - {name: 节点轮询, <<: *Loadbalance, filter: *FilterTunnel, icon: https://testingcf.jsdelivr.net/gh/Orz-3/mini@master/Color/Roundrobin.png}
 
   # 应用分组
+  - {name: 电报信息, type: select, proxies: [节点选择, 自动选择, 手动选择, 省流选择, 高级选择, 中继选择, 落地选择, 节点轮询, 香港节点, 日本节点, 韩国节点, 狮城节点, 美国节点, 英国节点, 法国节点, 德国节点, 台湾节点,RN节点], icon: https://testingcf.jsdelivr.net/gh/Orz-3/mini@master/Color/Telegram.png}
+  - {name: 人工智能, type: select, proxies: [狮城节点, 节点选择, 自动选择, 手动选择, 省流选择, 高级选择, 中继选择, 落地选择, 节点轮询, 香港节点, 日本节点, 韩国节点, 美国节点, 英国节点, 法国节点, 德国节点, 台湾节点], icon: https://testingcf.jsdelivr.net/gh/Orz-3/mini@master/Color/OpenAI.png}
   - {name: 苹果服务, type: select, proxies: [DIRECT, 节点选择, 自动选择, 手动选择, 省流选择, 高级选择, 中继选择, 落地选择, 节点轮询, 香港节点, 日本节点, 韩国节点, 狮城节点, 美国节点, 英国节点, 法国节点, 德国节点, 台湾节点], icon: https://testingcf.jsdelivr.net/gh/Orz-3/mini@master/Color/Apple.png}
   - {name: 微软服务, type: select, proxies: [DIRECT, 节点选择, 自动选择, 手动选择, 省流选择, 高级选择, 中继选择, 落地选择, 节点轮询, 香港节点, 日本节点, 韩国节点, 狮城节点, 美国节点, 英国节点, 法国节点, 德国节点, 台湾节点], icon: https://testingcf.jsdelivr.net/gh/Orz-3/mini@master/Color/Microsoft.png}
   - {name: 国外媒体, type: select, proxies: [节点选择, 自动选择, 手动选择, 省流选择, 高级选择, 中继选择, 落地选择, 节点轮询, 香港节点, 日本节点, 韩国节点, 狮城节点, 美国节点, 英国节点, 法国节点, 德国节点, 台湾节点], icon: https://testingcf.jsdelivr.net/gh/Orz-3/mini@master/Color/Streaming.png}
@@ -122,54 +124,6 @@ proxy-groups:
   - {name: 台湾节点, <<: *Auto, filter: *FilterTW, icon: https://testingcf.jsdelivr.net/gh/Orz-3/mini@master/Color/CN.png}
   - {name: RN节点, <<: *Auto, filter: *FilterRN, icon: https://testingcf.jsdelivr.net/gh/Orz-3/mini@master/Color/XD.png}
 
-  # --- 新增：流媒体独立组 ---
-  - name: YouTube
-    type: select
-    proxies: [节点选择, 自动选择, 手动选择, 省流选择, 高级选择, 中继选择, 落地选择, 节点轮询, 香港节点, 日本节点, 韩国节点, 狮城节点, 美国节点, 英国节点, 法国节点, 德国节点, 台湾节点,RN节点]
-    icon: https://testingcf.jsdelivr.net/gh/Orz-3/mini@master/Color/YouTube.png
-
-  - name: Netflix
-    type: select
-    proxies: [节点选择, 自动选择, 手动选择, 省流选择, 高级选择, 中继选择, 落地选择, 节点轮询, 香港节点, 日本节点, 韩国节点, 狮城节点, 美国节点, 英国节点, 法国节点, 德国节点, 台湾节点,RN节点]
-    icon: https://testingcf.jsdelivr.net/gh/Orz-3/mini@master/Color/Netflix.png
-
-  - name: DisneyPlus
-    type: select
-    proxies: [节点选择, 自动选择, 手动选择, 省流选择, 高级选择, 中继选择, 落地选择, 节点轮询, 香港节点, 日本节点, 韩国节点, 狮城节点, 美国节点, 英国节点, 法国节点, 德国节点, 台湾节点,RN节点]
-    icon: https://testingcf.jsdelivr.net/gh/Orz-3/mini@master/Color/DisneyPlus.png
-
-  - name: TikTok
-    type: select
-    proxies: [节点选择, 自动选择, 手动选择, 省流选择, 高级选择, 中继选择, 落地选择, 节点轮询, 香港节点, 日本节点, 韩国节点, 狮城节点, 美国节点, 英国节点, 法国节点, 德国节点, 台湾节点,RN节点]
-    icon: https://testingcf.jsdelivr.net/gh/Orz-3/mini@master/Color/TikTok.png
-
-  # --- 新增：AI 服务独立组 ---
-  - name: ChatGPT
-    type: select
-    proxies: [节点选择, 自动选择, 手动选择, 省流选择, 高级选择, 中继选择, 落地选择, 节点轮询, 香港节点, 日本节点, 韩国节点, 狮城节点, 美国节点, 英国节点, 法国节点, 德国节点, 台湾节点,RN节点]
-    icon: https://testingcf.jsdelivr.net/gh/Orz-3/mini@master/Color/OpenAI.png
-
-  - name: Grok
-    type: select
-    proxies: [节点选择, 自动选择, 手动选择, 省流选择, 高级选择, 中继选择, 落地选择, 节点轮询, 香港节点, 日本节点, 韩国节点, 狮城节点, 美国节点, 英国节点, 法国节点, 德国节点, 台湾节点,RN节点]
-    icon: https://testingcf.jsdelivr.net/gh/Orz-3/mini@master/Color/X.png  # X平台图标
-
-  - name: Copilot
-    type: select
-    proxies: [微软服务,节点选择, 自动选择, 手动选择, 省流选择, 高级选择, 中继选择, 落地选择, 节点轮询, 香港节点, 日本节点, 韩国节点, 狮城节点, 美国节点, 英国节点, 法国节点, 德国节点, 台湾节点,RN节点]
-    icon: https://testingcf.jsdelivr.net/gh/Orz-3/mini@master/Color/Microsoft.png
-
-  # --- 新增：独立应用组 ---
-  - name: GitHub
-    type: select
-    proxies: [节点选择, 自动选择, 手动选择, 省流选择, 高级选择, 中继选择, 落地选择, 节点轮询, 香港节点, 日本节点, 韩国节点, 狮城节点, 美国节点, 英国节点, 法国节点, 德国节点, 台湾节点,RN节点]
-    icon: https://testingcf.jsdelivr.net/gh/Orz-3/mini@master/Color/GitHub.png
-
-  - name: Telegram
-    type: select
-    proxies: [节点选择, 自动选择, 手动选择, 省流选择, 高级选择, 中继选择, 落地选择, 节点轮询, 香港节点, 日本节点, 韩国节点, 狮城节点, 美国节点, 英国节点, 法国节点, 德国节点, 台湾节点,RN节点]
-    icon: https://testingcf.jsdelivr.net/gh/Orz-3/mini@master/Color/Telegram.png
-
 ### 规则配置
 RuleSet_classical: &RuleSet_classical {type: http, behavior: classical, interval: 43200, format: text, proxy: 节点选择}
 RuleSet_domain: &RuleSet_domain {type: http, behavior: domain, interval: 43200, format: text, proxy: 节点选择}
@@ -182,6 +136,11 @@ rule-providers:
     <<: *RuleSet_filter
     url: https://testingcf.jsdelivr.net/gh/DustinWin/ruleset_geodata@mihomo-ruleset/fakeip-filter.mrs
     path: ./rule_set/other_ruleset/fakeip-filter.mrs
+
+  cn:
+    <<: *RuleSet_filter
+    url: https://testingcf.jsdelivr.net/gh/DustinWin/ruleset_geodata@mihomo-ruleset/cn.mrs
+    path: ./rule_set/other_ruleset/cn.mrs
 
   private:
     <<: *RuleSet_filter
@@ -228,76 +187,31 @@ rule-providers:
     url: https://ruleset.skk.moe/Clash/non_ip/cdn.txt
     path: ./rule_set/sukkaw_ruleset/cdn_non_ip.txt
 
-  # --- 流媒体拆分 ---
-  youtube_non_ip:
+  # 所有流媒体（包括上述所有流媒体）
+  stream_non_ip:
     <<: *RuleSet_classical
-    url: https://ruleset.skk.moe/Clash/non_ip/youtube.txt
-    path: ./rule_set/sukkaw_ruleset/youtube_non_ip.txt
+    url: https://ruleset.skk.moe/Clash/non_ip/stream.txt
+    path: ./rule_set/sukkaw_ruleset/stream_non_ip.txt
 
-  youtube_ip:
+  stream_ip:
     <<: *RuleSet_classical
-    url: https://ruleset.skk.moe/Clash/ip/youtube.txt
-    path: ./rule_set/sukkaw_ruleset/youtube_ip.txt
+    url: https://ruleset.skk.moe/Clash/ip/stream.txt
+    path: ./rule_set/sukkaw_ruleset/stream_ip.txt
 
-  netflix_non_ip:
+  ai_non_ip:
     <<: *RuleSet_classical
-    url: https://ruleset.skk.moe/Clash/non_ip/netflix.txt
-    path: ./rule_set/sukkaw_ruleset/netflix_non_ip.txt
+    url: https://ruleset.skk.moe/Clash/non_ip/ai.txt
+    path: ./rule_set/sukkaw_ruleset/ai_non_ip.txt
 
-  netflix_ip:
+  telegram_non_ip:
     <<: *RuleSet_classical
-    url: https://ruleset.skk.moe/Clash/ip/netflix.txt
-    path: ./rule_set/sukkaw_ruleset/netflix_ip.txt
+    url: https://ruleset.skk.moe/Clash/non_ip/telegram.txt
+    path: ./rule_set/sukkaw_ruleset/telegram_non_ip.txt
 
-  disney_non_ip:
+  telegram_ip:
     <<: *RuleSet_classical
-    url: https://ruleset.skk.moe/Clash/non_ip/disney.txt
-    path: ./rule_set/sukkaw_ruleset/disney_non_ip.txt
-
-  disney_ip:
-    <<: *RuleSet_classical
-    url: https://ruleset.skk.moe/Clash/ip/disney.txt
-    path: ./rule_set/sukkaw_ruleset/disney_ip.txt
-
-  tiktok_non_ip:
-    <<: *RuleSet_classical
-    url: https://ruleset.skk.moe/Clash/non_ip/tiktok.txt
-    path: ./rule_set/sukkaw_ruleset/tiktok_non_ip.txt
-
-  tiktok_ip:
-    <<: *RuleSet_classical
-    url: https://ruleset.skk.moe/Clash/ip/tiktok.txt
-    path: ./rule_set/sukkaw_ruleset/tiktok_ip.txt
-
-  # --- AI 服务 ---
-  chatgpt_non_ip:
-    <<: *RuleSet_classical
-    url: https://ruleset.skk.moe/Clash/non_ip/chatgpt.txt
-    path: ./rule_set/sukkaw_ruleset/chatgpt_non_ip.txt
-
-  grok_non_ip:
-    <<: *RuleSet_classical
-    url: https://ruleset.skk.moe/Clash/non_ip/grok.txt
-    path: ./rule_set/sukkaw_ruleset/grok_non_ip.txt
-  grok_ip:
-    <<: *RuleSet_ipcidr
-    url: https://ruleset.skk.moe/Clash/ip/grok.txt
-    path: ./rule_set/sukkaw_ruleset/grok_ip.txt
-  copilot_non_ip:
-    <<: *RuleSet_classical
-    url: https://ruleset.skk.moe/Clash/non_ip/copilot.txt
-    path: ./rule_set/sukkaw_ruleset/copilot_non_ip.txt
-
-  # --- GitHub ---
-  github_non_ip:
-    <<: *RuleSet_classical
-    url: https://ruleset.skk.moe/Clash/non_ip/github.txt
-    path: ./rule_set/sukkaw_ruleset/github_non_ip.txt
-
-  github_ip:
-    <<: *RuleSet_classical
-    url: https://ruleset.skk.moe/Clash/ip/github.txt
-    path: ./rule_set/sukkaw_ruleset/github_ip.txt
+    url: https://ruleset.skk.moe/Clash/ip/telegram.txt
+    path: ./rule_set/sukkaw_ruleset/telegram_ip.txt
 
   apple_cdn:
     <<: *RuleSet_domain
@@ -341,6 +255,10 @@ rule-providers:
     url: https://ruleset.skk.moe/Clash/non_ip/lan.txt
     path: ./rule_set/sukkaw_ruleset/lan_non_ip.txt
 
+  lan_ip:
+    <<: *RuleSet_classical
+    url: https://ruleset.skk.moe/Clash/ip/lan.txt
+    path: ./rule_set/sukkaw_ruleset/lan_ip.txt
   
   domestic_non_ip:
     <<: *RuleSet_classical
@@ -357,71 +275,51 @@ rule-providers:
     url: https://ruleset.skk.moe/Clash/non_ip/global.txt
     path: ./rule_set/sukkaw_ruleset/global_non_ip.txt
 
-  domestic_cn:
-    type: http
-    behavior: domain
-    url: https://ruleset.skk.moe/Clash/domainset/domestic.txt
-    path: ./rule_set/sukkaw_ruleset/domestic_cn.txt
-    interval: 86400
-
   domestic_ip:
-    type: http
-    behavior: classical
+    <<: *RuleSet_classical
     url: https://ruleset.skk.moe/Clash/ip/domestic.txt
     path: ./rule_set/sukkaw_ruleset/domestic_ip.txt
-    interval: 86400
 
-  lan_ip:
-    type: http
-    behavior: classical
-    url: https://ruleset.skk.moe/Clash/ip/lan.txt
-    path: ./rule_set/sukkaw_ruleset/lan_ip.txt
-    interval: 86400
+  china_ip:
+    <<: *RuleSet_ipcidr
+    url: https://testingcf.jsdelivr.net/gh/Seameee/override-hub@refs/heads/main/mergecnip/china_ip.txt
+    path: ./rule_set/other_ruleset/china_ip.txt
+
 # 分流规则
 rules:
-  # 自定义直连
-  - DOMAIN-SUFFIX,shareyour.cc,DIRECT
-  - DOMAIN-SUFFIX,15zw.icu,DIRECT
+  # 自定义规则
+  - DOMAIN-SUFFIX,api.cubence.com,DIRECT
   - DOMAIN-SUFFIX,ikuncode.cc,DIRECT
   - DOMAIN-SUFFIX,lanyun.net,DIRECT
 
-  # 拒绝类（最优先）
+  ### 非 IP 类规则
   - RULE-SET,reject_non_ip,REJECT
   - RULE-SET,reject_domainset,REJECT
   - RULE-SET,reject_non_ip_drop,REJECT-DROP
-  - RULE-SET,reject_ip,REJECT
-
-  # 直连类
-  - RULE-SET,lan_non_ip,DIRECT
-  - RULE-SET,lan_ip,DIRECT,no-resolve
-  - RULE-SET,domestic_cn,DIRECT
-  - RULE-SET,domestic_ip,DIRECT,no-resolve
-  - RULE-SET,apple_cn_non_ip,DIRECT
-  - RULE-SET,microsoft_cdn_non_ip,DIRECT
-  - RULE-SET,apple_cdn,DIRECT
+  - RULE-SET,reject_non_ip_no_drop,REJECT
   - RULE-SET,cdn_domainset,节点选择
   - RULE-SET,cdn_non_ip,节点选择
+  - RULE-SET,stream_non_ip,国外媒体
+  - RULE-SET,telegram_non_ip,电报信息
+  - RULE-SET,apple_cdn,DIRECT
   - RULE-SET,download_domainset,省流选择
   - RULE-SET,download_non_ip,省流选择
-
-  # 代理类
-  - RULE-SET,global_non_ip,节点选择
-  - RULE-SET,youtube_non_ip,YouTube
-  - RULE-SET,youtube_ip,YouTube,no-resolve
-  - RULE-SET,netflix_non_ip,Netflix
-  - RULE-SET,netflix_ip,Netflix,no-resolve
-  - RULE-SET,disney_non_ip,DisneyPlus
-  - RULE-SET,disney_ip,DisneyPlus,no-resolve
-  - RULE-SET,tiktok_non_ip,TikTok
-  - RULE-SET,tiktok_ip,TikTok,no-resolve
-  - RULE-SET,chatgpt_non_ip,ChatGPT
-  - RULE-SET,grok_non_ip,Grok
-  - RULE-SET,grok_ip,Grok,no-resolve
-  - RULE-SET,copilot_non_ip,Copilot
-  - RULE-SET,github_non_ip,GitHub
-  - RULE-SET,github_ip,GitHub,no-resolve
+  - RULE-SET,microsoft_cdn_non_ip,DIRECT
+  - RULE-SET,apple_cn_non_ip,DIRECT
   - RULE-SET,apple_services,苹果服务
   - RULE-SET,microsoft_non_ip,微软服务
+  - RULE-SET,ai_non_ip,人工智能
+  - RULE-SET,global_non_ip,节点选择
+  - RULE-SET,domestic_non_ip,DIRECT
+  - RULE-SET,cn,DIRECT
+  - RULE-SET,direct_non_ip,DIRECT
+  - RULE-SET,lan_non_ip,DIRECT
 
-
+  ### IP 类规则
+  - RULE-SET,reject_ip,REJECT
+  - RULE-SET,telegram_ip,电报信息,no-resolve
+  - RULE-SET,stream_ip,国外媒体
+  - RULE-SET,lan_ip,DIRECT,no-resolve
+  - RULE-SET,domestic_ip,DIRECT
+  - RULE-SET,china_ip,DIRECT
   - MATCH,节点选择 
