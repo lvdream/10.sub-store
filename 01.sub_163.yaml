@@ -235,31 +235,73 @@ rule-providers:
     url: https://ruleset.skk.moe/Clash/non_ip/cdn.txt
     path: ./rule_set/sukkaw_ruleset/cdn_non_ip.txt
 
-  # 所有流媒体（包括上述所有流媒体）
-  stream_non_ip:
+  # --- 流媒体拆分 ---
+  youtube_non_ip:
     <<: *RuleSet_classical
-    url: https://ruleset.skk.moe/Clash/non_ip/stream.txt
-    path: ./rule_set/sukkaw_ruleset/stream_non_ip.txt
+    url: https://ruleset.skk.moe/Clash/non_ip/youtube.txt
+    path: ./rule_set/sukkaw_ruleset/youtube_non_ip.txt
 
-  stream_ip:
+  youtube_ip:
     <<: *RuleSet_classical
-    url: https://ruleset.skk.moe/Clash/ip/stream.txt
-    path: ./rule_set/sukkaw_ruleset/stream_ip.txt
+    url: https://ruleset.skk.moe/Clash/ip/youtube.txt
+    path: ./rule_set/sukkaw_ruleset/youtube_ip.txt
 
-  ai_non_ip:
+  netflix_non_ip:
     <<: *RuleSet_classical
-    url: https://ruleset.skk.moe/Clash/non_ip/ai.txt
-    path: ./rule_set/sukkaw_ruleset/ai_non_ip.txt
+    url: https://ruleset.skk.moe/Clash/non_ip/netflix.txt
+    path: ./rule_set/sukkaw_ruleset/netflix_non_ip.txt
 
-  telegram_non_ip:
+  netflix_ip:
     <<: *RuleSet_classical
-    url: https://ruleset.skk.moe/Clash/non_ip/telegram.txt
-    path: ./rule_set/sukkaw_ruleset/telegram_non_ip.txt
+    url: https://ruleset.skk.moe/Clash/ip/netflix.txt
+    path: ./rule_set/sukkaw_ruleset/netflix_ip.txt
 
-  telegram_ip:
+  disney_non_ip:
     <<: *RuleSet_classical
-    url: https://ruleset.skk.moe/Clash/ip/telegram.txt
-    path: ./rule_set/sukkaw_ruleset/telegram_ip.txt
+    url: https://ruleset.skk.moe/Clash/non_ip/disney.txt
+    path: ./rule_set/sukkaw_ruleset/disney_non_ip.txt
+
+  disney_ip:
+    <<: *RuleSet_classical
+    url: https://ruleset.skk.moe/Clash/ip/disney.txt
+    path: ./rule_set/sukkaw_ruleset/disney_ip.txt
+
+  tiktok_non_ip:
+    <<: *RuleSet_classical
+    url: https://ruleset.skk.moe/Clash/non_ip/tiktok.txt
+    path: ./rule_set/sukkaw_ruleset/tiktok_non_ip.txt
+
+  tiktok_ip:
+    <<: *RuleSet_classical
+    url: https://ruleset.skk.moe/Clash/ip/tiktok.txt
+    path: ./rule_set/sukkaw_ruleset/tiktok_ip.txt
+
+  # --- AI 服务 ---
+  chatgpt_non_ip:
+    <<: *RuleSet_classical
+    url: https://ruleset.skk.moe/Clash/non_ip/chatgpt.txt
+    path: ./rule_set/sukkaw_ruleset/chatgpt_non_ip.txt
+
+  grok_non_ip:
+    <<: *RuleSet_classical
+    url: https://ruleset.skk.moe/Clash/non_ip/grok.txt
+    path: ./rule_set/sukkaw_ruleset/grok_non_ip.txt
+
+  copilot_non_ip:
+    <<: *RuleSet_classical
+    url: https://ruleset.skk.moe/Clash/non_ip/copilot.txt
+    path: ./rule_set/sukkaw_ruleset/copilot_non_ip.txt
+
+  # --- GitHub ---
+  github_non_ip:
+    <<: *RuleSet_classical
+    url: https://ruleset.skk.moe/Clash/non_ip/github.txt
+    path: ./rule_set/sukkaw_ruleset/github_non_ip.txt
+
+  github_ip:
+    <<: *RuleSet_classical
+    url: https://ruleset.skk.moe/Clash/ip/github.txt
+    path: ./rule_set/sukkaw_ruleset/github_ip.txt
 
   apple_cdn:
     <<: *RuleSet_domain
@@ -352,8 +394,6 @@ rules:
   - RULE-SET,reject_non_ip_no_drop,REJECT
   - RULE-SET,cdn_domainset,节点选择
   - RULE-SET,cdn_non_ip,节点选择
-  - RULE-SET,stream_non_ip,国外媒体
-  - RULE-SET,telegram_non_ip,电报信息
   - RULE-SET,apple_cdn,DIRECT
   - RULE-SET,download_domainset,省流选择
   - RULE-SET,download_non_ip,省流选择
@@ -361,17 +401,34 @@ rules:
   - RULE-SET,apple_cn_non_ip,DIRECT
   - RULE-SET,apple_services,苹果服务
   - RULE-SET,microsoft_non_ip,微软服务
-  - RULE-SET,ai_non_ip,人工智能
   - RULE-SET,global_non_ip,节点选择
   - RULE-SET,domestic_non_ip,DIRECT
   - RULE-SET,cn,DIRECT
   - RULE-SET,direct_non_ip,DIRECT
   - RULE-SET,lan_non_ip,DIRECT
 
+  # --- 流媒体独立分流 ---
+  - RULE-SET,youtube_non_ip,YouTube
+  - RULE-SET,youtube_ip,YouTube,no-resolve
+  - RULE-SET,netflix_non_ip,Netflix
+  - RULE-SET,netflix_ip,Netflix,no-resolve
+  - RULE-SET,disney_non_ip,DisneyPlus
+  - RULE-SET,disney_ip,DisneyPlus,no-resolve
+  - RULE-SET,tiktok_non_ip,TikTok
+  - RULE-SET,tiktok_ip,TikTok,no-resolve
+  # --- AI 服务独立分流 ---
+  - RULE-SET,chatgpt_non_ip,ChatGPT
+  - RULE-SET,grok_non_ip,Grok
+  - RULE-SET,copilot_non_ip,Copilot
+  # --- 独立应用 ---
+  - RULE-SET,github_non_ip,GitHub
+  - RULE-SET,github_ip,GitHub,no-resolve
+  # Telegram 规则你已有，但建议优先使用独立组
+  - RULE-SET,telegram_non_ip,Telegram
+  - RULE-SET,telegram_ip,Telegram,no-resolve
+
   ### IP 类规则
   - RULE-SET,reject_ip,REJECT
-  - RULE-SET,telegram_ip,电报信息,no-resolve
-  - RULE-SET,stream_ip,国外媒体
   - RULE-SET,lan_ip,DIRECT,no-resolve
   - RULE-SET,domestic_ip,DIRECT
   - RULE-SET,china_ip,DIRECT
