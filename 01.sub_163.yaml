@@ -106,8 +106,6 @@ proxy-groups:
   - {name: 节点轮询, <<: *Loadbalance, filter: *FilterTunnel, icon: https://testingcf.jsdelivr.net/gh/Orz-3/mini@master/Color/Roundrobin.png}
 
   # 应用分组
-  - {name: 电报信息, type: select, proxies: [节点选择, 自动选择, 手动选择, 省流选择, 高级选择, 中继选择, 落地选择, 节点轮询, 香港节点, 日本节点, 韩国节点, 狮城节点, 美国节点, 英国节点, 法国节点, 德国节点, 台湾节点,RN节点], icon: https://testingcf.jsdelivr.net/gh/Orz-3/mini@master/Color/Telegram.png}
-  - {name: 人工智能, type: select, proxies: [狮城节点, 节点选择, 自动选择, 手动选择, 省流选择, 高级选择, 中继选择, 落地选择, 节点轮询, 香港节点, 日本节点, 韩国节点, 美国节点, 英国节点, 法国节点, 德国节点, 台湾节点], icon: https://testingcf.jsdelivr.net/gh/Orz-3/mini@master/Color/OpenAI.png}
   - {name: 苹果服务, type: select, proxies: [DIRECT, 节点选择, 自动选择, 手动选择, 省流选择, 高级选择, 中继选择, 落地选择, 节点轮询, 香港节点, 日本节点, 韩国节点, 狮城节点, 美国节点, 英国节点, 法国节点, 德国节点, 台湾节点], icon: https://testingcf.jsdelivr.net/gh/Orz-3/mini@master/Color/Apple.png}
   - {name: 微软服务, type: select, proxies: [DIRECT, 节点选择, 自动选择, 手动选择, 省流选择, 高级选择, 中继选择, 落地选择, 节点轮询, 香港节点, 日本节点, 韩国节点, 狮城节点, 美国节点, 英国节点, 法国节点, 德国节点, 台湾节点], icon: https://testingcf.jsdelivr.net/gh/Orz-3/mini@master/Color/Microsoft.png}
   - {name: 国外媒体, type: select, proxies: [节点选择, 自动选择, 手动选择, 省流选择, 高级选择, 中继选择, 落地选择, 节点轮询, 香港节点, 日本节点, 韩国节点, 狮城节点, 美国节点, 英国节点, 法国节点, 德国节点, 台湾节点], icon: https://testingcf.jsdelivr.net/gh/Orz-3/mini@master/Color/Streaming.png}
@@ -158,7 +156,7 @@ proxy-groups:
 
   - name: Copilot
     type: select
-    proxies: [节点选择, 自动选择, 手动选择, 省流选择, 高级选择, 中继选择, 落地选择, 节点轮询, 香港节点, 日本节点, 韩国节点, 狮城节点, 美国节点, 英国节点, 法国节点, 德国节点, 台湾节点,RN节点]
+    proxies: [微软服务,节点选择, 自动选择, 手动选择, 省流选择, 高级选择, 中继选择, 落地选择, 节点轮询, 香港节点, 日本节点, 韩国节点, 狮城节点, 美国节点, 英国节点, 法国节点, 德国节点, 台湾节点,RN节点]
     icon: https://testingcf.jsdelivr.net/gh/Orz-3/mini@master/Color/Microsoft.png
 
   # --- 新增：独立应用组 ---
@@ -169,7 +167,7 @@ proxy-groups:
 
   - name: Telegram
     type: select
-    proxies: [电报信息,节点选择, 自动选择, 手动选择, 省流选择, 高级选择, 中继选择, 落地选择, 节点轮询, 香港节点, 日本节点, 韩国节点, 狮城节点, 美国节点, 英国节点, 法国节点, 德国节点, 台湾节点,RN节点]
+    proxies: [节点选择, 自动选择, 手动选择, 省流选择, 高级选择, 中继选择, 落地选择, 节点轮询, 香港节点, 日本节点, 韩国节点, 狮城节点, 美国节点, 英国节点, 法国节点, 德国节点, 台湾节点,RN节点]
     icon: https://testingcf.jsdelivr.net/gh/Orz-3/mini@master/Color/Telegram.png
 
 ### 规则配置
@@ -184,11 +182,6 @@ rule-providers:
     <<: *RuleSet_filter
     url: https://testingcf.jsdelivr.net/gh/DustinWin/ruleset_geodata@mihomo-ruleset/fakeip-filter.mrs
     path: ./rule_set/other_ruleset/fakeip-filter.mrs
-
-  cn:
-    <<: *RuleSet_filter
-    url: https://testingcf.jsdelivr.net/gh/DustinWin/ruleset_geodata@mihomo-ruleset/cn.mrs
-    path: ./rule_set/other_ruleset/cn.mrs
 
   private:
     <<: *RuleSet_filter
@@ -286,7 +279,10 @@ rule-providers:
     <<: *RuleSet_classical
     url: https://ruleset.skk.moe/Clash/non_ip/grok.txt
     path: ./rule_set/sukkaw_ruleset/grok_non_ip.txt
-
+  grok_ip:
+    <<: *RuleSet_ipcidr
+    url: https://ruleset.skk.moe/Clash/ip/grok.txt
+    path: ./rule_set/sukkaw_ruleset/grok_ip.txt
   copilot_non_ip:
     <<: *RuleSet_classical
     url: https://ruleset.skk.moe/Clash/non_ip/copilot.txt
@@ -345,10 +341,6 @@ rule-providers:
     url: https://ruleset.skk.moe/Clash/non_ip/lan.txt
     path: ./rule_set/sukkaw_ruleset/lan_non_ip.txt
 
-  lan_ip:
-    <<: *RuleSet_classical
-    url: https://ruleset.skk.moe/Clash/ip/lan.txt
-    path: ./rule_set/sukkaw_ruleset/lan_ip.txt
   
   domestic_non_ip:
     <<: *RuleSet_classical
@@ -365,16 +357,26 @@ rule-providers:
     url: https://ruleset.skk.moe/Clash/non_ip/global.txt
     path: ./rule_set/sukkaw_ruleset/global_non_ip.txt
 
+  domestic_cn:
+    type: http
+    behavior: domain
+    url: https://ruleset.skk.moe/Clash/domainset/domestic.txt
+    path: ./rule_set/sukkaw_ruleset/domestic_cn.txt
+    interval: 86400
+
   domestic_ip:
-    <<: *RuleSet_classical
+    type: http
+    behavior: classical
     url: https://ruleset.skk.moe/Clash/ip/domestic.txt
     path: ./rule_set/sukkaw_ruleset/domestic_ip.txt
+    interval: 86400
 
-  china_ip:
-    <<: *RuleSet_ipcidr
-    url: https://testingcf.jsdelivr.net/gh/Seameee/override-hub@refs/heads/main/mergecnip/china_ip.txt
-    path: ./rule_set/other_ruleset/china_ip.txt
-
+  lan_ip:
+    type: http
+    behavior: classical
+    url: https://ruleset.skk.moe/Clash/ip/lan.txt
+    path: ./rule_set/sukkaw_ruleset/lan_ip.txt
+    interval: 86400
 # 分流规则
 rules:
   # 自定义规则
@@ -384,8 +386,6 @@ rules:
   - DOMAIN-SUFFIX,lanyun.net,DIRECT
   # 青龙服务直连
   ## - SRC-IP-CIDR,192.168.3.21/32,RN节点
-  - DOMAIN-SUFFIX,david2025.top,DIRECT
-  - DOMAIN-SUFFIX,kuaishou.com,DIRECT
 
   ### 非 IP 类规则
   - RULE-SET,reject_non_ip,REJECT
@@ -403,7 +403,6 @@ rules:
   - RULE-SET,microsoft_non_ip,微软服务
   - RULE-SET,global_non_ip,节点选择
   - RULE-SET,domestic_non_ip,DIRECT
-  - RULE-SET,cn,DIRECT
   - RULE-SET,direct_non_ip,DIRECT
   - RULE-SET,lan_non_ip,DIRECT
 
@@ -420,6 +419,7 @@ rules:
   - RULE-SET,chatgpt_non_ip,ChatGPT
   - RULE-SET,grok_non_ip,Grok
   - RULE-SET,copilot_non_ip,Copilot
+  - RULE-SET,grok_ip,Grok,no-resolve
   # --- 独立应用 ---
   - RULE-SET,github_non_ip,GitHub
   - RULE-SET,github_ip,GitHub,no-resolve
@@ -429,7 +429,13 @@ rules:
 
   ### IP 类规则
   - RULE-SET,reject_ip,REJECT
+  
+    # 国内域名直连
+  - RULE-SET,domestic_cn,DIRECT
+
+  # 国内 IP 段直连（兜底）
+  - RULE-SET,domestic_ip,DIRECT,no-resolve
+
+  # 局域网 IP 直连
   - RULE-SET,lan_ip,DIRECT,no-resolve
-  - RULE-SET,domestic_ip,DIRECT
-  - RULE-SET,china_ip,DIRECT
   - MATCH,节点选择 
