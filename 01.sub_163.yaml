@@ -32,8 +32,8 @@ dns:
         - https://dns.pub/dns-query
         - https://dns.flymc.cc/dns-query
     fake-ip-range: 198.18.0.1/16
-    fake-ip-filter: ['rule-set:fakeip-filter,trackerslist,private,cn']
-    nameserver-policy: {'rule-set:reject_non_ip,reject_domainset,reject_non_ip_drop,reject_non_ip_no_drop': [rcode://success]}
+    fake-ip-filter: ['domain-set:domestic_cn','domain-set:private','domain-set:fakeip-filter','domain-set:trackerslist']
+    nameserver-policy: {'rule-set:reject_domainset,reject_non_ip': [rcode://success]}
 
 ### 域名嗅探
 sniffer:
@@ -379,34 +379,33 @@ rule-providers:
     interval: 86400
 # 分流规则
 rules:
-  # 自定义规则
+  # 自定义直连
   - DOMAIN-SUFFIX,shareyour.cc,DIRECT
   - DOMAIN-SUFFIX,15zw.icu,DIRECT
   - DOMAIN-SUFFIX,ikuncode.cc,DIRECT
   - DOMAIN-SUFFIX,lanyun.net,DIRECT
-  # 青龙服务直连
-  ## - SRC-IP-CIDR,192.168.3.21/32,RN节点
 
-  ### 非 IP 类规则
+  # 拒绝类（最优先）
   - RULE-SET,reject_non_ip,REJECT
   - RULE-SET,reject_domainset,REJECT
   - RULE-SET,reject_non_ip_drop,REJECT-DROP
-  - RULE-SET,reject_non_ip_no_drop,REJECT
+  - RULE-SET,reject_ip,REJECT
+
+  # 直连类
+  - RULE-SET,lan_non_ip,DIRECT
+  - RULE-SET,lan_ip,DIRECT,no-resolve
+  - RULE-SET,domestic_cn,DIRECT
+  - RULE-SET,domestic_ip,DIRECT,no-resolve
+  - RULE-SET,apple_cn_non_ip,DIRECT
+  - RULE-SET,microsoft_cdn_non_ip,DIRECT
+  - RULE-SET,apple_cdn,DIRECT
   - RULE-SET,cdn_domainset,节点选择
   - RULE-SET,cdn_non_ip,节点选择
-  - RULE-SET,apple_cdn,DIRECT
   - RULE-SET,download_domainset,省流选择
   - RULE-SET,download_non_ip,省流选择
-  - RULE-SET,microsoft_cdn_non_ip,DIRECT
-  - RULE-SET,apple_cn_non_ip,DIRECT
-  - RULE-SET,apple_services,苹果服务
-  - RULE-SET,microsoft_non_ip,微软服务
-  - RULE-SET,global_non_ip,节点选择
-  - RULE-SET,domestic_non_ip,DIRECT
-  - RULE-SET,direct_non_ip,DIRECT
-  - RULE-SET,lan_non_ip,DIRECT
 
-  # --- 流媒体独立分流 ---
+  # 代理类
+  - RULE-SET,global_non_ip,节点选择
   - RULE-SET,youtube_non_ip,YouTube
   - RULE-SET,youtube_ip,YouTube,no-resolve
   - RULE-SET,netflix_non_ip,Netflix
@@ -415,27 +414,14 @@ rules:
   - RULE-SET,disney_ip,DisneyPlus,no-resolve
   - RULE-SET,tiktok_non_ip,TikTok
   - RULE-SET,tiktok_ip,TikTok,no-resolve
-  # --- AI 服务独立分流 ---
   - RULE-SET,chatgpt_non_ip,ChatGPT
   - RULE-SET,grok_non_ip,Grok
-  - RULE-SET,copilot_non_ip,Copilot
   - RULE-SET,grok_ip,Grok,no-resolve
-  # --- 独立应用 ---
+  - RULE-SET,copilot_non_ip,Copilot
   - RULE-SET,github_non_ip,GitHub
   - RULE-SET,github_ip,GitHub,no-resolve
-  # Telegram 规则你已有，但建议优先使用独立组
-  - RULE-SET,telegram_non_ip,Telegram
-  - RULE-SET,telegram_ip,Telegram,no-resolve
+  - RULE-SET,apple_services,苹果服务
+  - RULE-SET,microsoft_non_ip,微软服务
 
-  ### IP 类规则
-  - RULE-SET,reject_ip,REJECT
-  
-    # 国内域名直连
-  - RULE-SET,domestic_cn,DIRECT
 
-  # 国内 IP 段直连（兜底）
-  - RULE-SET,domestic_ip,DIRECT,no-resolve
-
-  # 局域网 IP 直连
-  - RULE-SET,lan_ip,DIRECT,no-resolve
   - MATCH,节点选择 
