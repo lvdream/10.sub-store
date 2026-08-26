@@ -99,6 +99,11 @@ FilterOthers: &FilterOthers '^(?!.*(🇭🇰|HK|Hong|香港|🇨🇳|TW|Taiwan|W
 FilterSave: &FilterSave '^(?=.*((\s|-)0\.[0-9](×|x|X)|低倍率|省流|大流量)).*$'
 FilterAdvance: &FilterAdvance '^(?=.*((?i)(\s|-)(([1-9](\.\d+)?)(×|x|X))|专线|专用|高级|急速|高倍率|IEPL|IPLC|AIA|CTM|CC|iepl|iplc|aia|ctm|cc)).*$'
 FilterLanding7201: &FilterLanding7201 '^(?=.*((?i)落地193A)).*$'
+FilterLanding7202: &FilterLanding7201 '^(?=.*((?i)落地193B)).*$'
+FilterLanding7203: &FilterLanding7201 '^(?=.*((?i)落地193C)).*$'
+FilterLanding0901: &FilterLanding0901 '^(?=.*((?i)落地gptA)).*$'
+FilterLanding0902: &FilterLanding0902 '^(?=.*((?i)落地gptB)).*$'
+FilterLanding0903: &FilterLanding0903 '^(?=.*((?i)落地gptC)).*$'
 FilterLandingTeamDY: &FilterLandingTeamDY '^(?=.*((?i)家人|(?i)akko)).*$'
 FilterHome: &FilterHome '^(?=.*((?i)家人|(?i)akko)).*$'
 FilterAll: &FilterAll '^(?=.*(.))(?!.*((?i)群|邀请|返利|循环|官网|客服|网站|网址|获取|订阅|流量|到期|机场|下次|版本|官址|备用|过期|已用|联系|邮箱|工单|贩卖|通知|倒卖|防止|国内|地址|频道|无法|说明|提示|特别|访问|支持|教程|关注|更新|作者|加入|(\b(USE|USED|TOTAL|EXPIRE|EMAIL|Panel|Channel|Author)\b|(\d{4}-\d{2}-\d{2}|\d+G)))).*$'
@@ -121,6 +126,11 @@ proxy-groups:
 #  - {name: 高级选择, <<: *Auto, filter: *FilterAdvance, icon: https://testingcf.jsdelivr.net/gh/Orz-3/mini@master/Color/Urltest.png}
   - {name: 家人NOSLA, <<: *Loadbalance, filter: *FilterHome, icon: https://testingcf.jsdelivr.net/gh/Orz-3/mini@master/Color/Final.png}
   - {name: 落地选择7201, <<: *Select, filter: *FilterLanding7201, icon: https://testingcf.jsdelivr.net/gh/Orz-3/mini@master/Color/Global.png}
+  - {name: 落地选择7202, <<: *Select, filter: *FilterLanding7202, icon: https://testingcf.jsdelivr.net/gh/Orz-3/mini@master/Color/Global.png}
+  - {name: 落地选择7203, <<: *Select, filter: *FilterLanding7203, icon: https://testingcf.jsdelivr.net/gh/Orz-3/mini@master/Color/Global.png}
+  - {name: 落地选择0901, <<: *Select, filter: *FilterLanding0901, icon: https://testingcf.jsdelivr.net/gh/Orz-3/mini@master/Color/Global.png}
+  - {name: 落地选择0902, <<: *Select, filter: *FilterLanding0902, icon: https://testingcf.jsdelivr.net/gh/Orz-3/mini@master/Color/Global.png}
+  - {name: 落地选择0903, <<: *Select, filter: *FilterLanding0903, icon: https://testingcf.jsdelivr.net/gh/Orz-3/mini@master/Color/Global.png}
 #   - {name: 节点轮询, <<: *Loadbalance, filter: *FilterTunnel, icon: https://testingcf.jsdelivr.net/gh/Orz-3/mini@master/Color/Roundrobin.png}
 
   # 应用分组
@@ -298,6 +308,11 @@ rule-providers:
 # 分流规则
 rules:
   - IN-PORT,7994,落地选择7201
+  - IN-PORT,7995,落地选择7202
+  - IN-PORT,7996,落地选择7203
+  - IN-PORT,7997,落地选择0901
+  - IN-PORT,7999,落地选择0902
+  - IN-PORT,7992,落地选择0903
   - IN-PORT,7893,手动选择
   - IN-PORT,7991,外部代理
   - IN-PORT,7993,AI代理
